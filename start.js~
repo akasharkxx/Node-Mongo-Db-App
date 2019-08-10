@@ -1,0 +1,17 @@
+require('dotenv').config();
+const Mongoose = require('mongoose');
+
+Mongoose.connect("mongodb://127.0.0.1:27017/demo-node-app",{useNewUrlParser:true, useMongoClient: true,});
+Mongoose.Promise = global.Promise;
+Mongoose.connection
+	.on('connected', ()=> {
+		console.log(`Mongoose connection open on mongodb://127.0.0.1:27017/demo-node-app`);
+	})
+    .on('error', (err)=> {
+		console.log(`Connection error: ${err.message}`);
+	})
+
+const app = require('./app');
+const server = app.listen(3000, () => {
+    console.log(`Express is running on port ${server.address().port}`);
+});
